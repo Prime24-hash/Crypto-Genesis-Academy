@@ -4,11 +4,12 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { AppWrapper } from "@/components/app-wrapper";
 import "./globals.css";
+import Script from "next/script"; // Нужно для вставки SDK
 
 export const metadata: Metadata = {
   title: "Crypto Genesis Academy",
   description: "Your path to professional crypto expertise",
-    generator: 'v0.app'
+  generator: 'v0.app'
 };
 
 export default function RootLayout({
@@ -17,15 +18,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <head>
-        <style>{`
-html {
-  font-family: ${GeistSans.style.fontFamily};
-  --font-sans: ${GeistSans.variable};
-  --font-mono: ${GeistMono.variable};
-}
-        `}</style>
+        {/* ПОДКЛЮЧЕНИЕ PI SDK — ОБЯЗАТЕЛЬНО */}
+        <Script 
+          src="https://minepi.com" 
+          strategy="beforeInteractive" 
+        />
       </head>
       <body>
         <AppWrapper>{children}</AppWrapper>
