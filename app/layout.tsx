@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <head>
-        {/* ✅ ПРАВИЛЬНЫЙ PI SDK */}
+        {/* Загружаем основной файл SDK */}
         <Script 
           src="https://sdk.minepi.com/pi-sdk.js"
           strategy="beforeInteractive"
@@ -28,6 +28,16 @@ export default function RootLayout({
       </head>
       <body>
         <AppWrapper>{children}</AppWrapper>
+
+        {/* ✅ Добавляем блок инициализации перед закрывающим тегом body */}
+        <Script id="pi-sdk-init" strategy="afterInteractive">
+          {`
+            if (window.Pi) {
+              window.Pi.init({ version: "2.0" });
+              console.log("Pi SDK initialized");
+            }
+          `}
+        </Script>
       </body>
     </html>
   );
